@@ -1,0 +1,21 @@
+{
+  "name": "aether-network",
+  "version": "1.0.0",
+  "description": "Aether Network - Full-stack code studio and social platform",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "keywords": [
+    "aether",
+    "network",
+    "studio",
+    "code-studio",
+    "nodejs"
+  ],
+  "author": "AetherOwner",
+  "license": "MIT"
+}

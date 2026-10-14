@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aether Network - Full Code Studio & Social Platform</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <!-- Космический интерактивный Canvas фон -->
+  <canvas id="spaceCanvas"></canvas>
+
+  <!-- Виджет статуса серверов в реальном времени -->
+  <div id="serverStatusWidget" class="server-status-widget">
+    <span class="status-dot">●</span>
+    <span>Aether Network Status: <strong id="serverPing">14 ms</strong> [ONLINE]</span>
+  </div>
+
+  <!-- Верхняя навигационная панель -->
+  <header class="navbar">
+    <div class="logo-area">
+      <span class="logo-icon">▲</span>
+      <h1 class="logo-text">AETHER NETWORK</h1>
+      <span class="badge-tag">v2.6.0-PROD</span>
+    </div>
+    
+    <div class="nav-controls">
+      <!-- Мультиязычный селектор (6 языков) -->
+      <select id="langSelect" class="cyber-select" aria-label="Выбор языка интерфейса">
+        <option value="ru">RU - Русский</option>
+        <option value="uz">UZ - O'zbekcha</option>
+        <option value="en">EN - English</option>
+        <option value="es">ES - Español</option>
+        <option value="cn">CN - 中文</option>
+        <option value="de">DE - Deutsch</option>
+      </select>
+
+      <button id="openAuthModalBtn" class="cyber-btn">
+        <span class="btn-symbol">■</span> Войти / Регистрация
+      </button>
+      
+      <div id="userProfileChip" class="user-profile-chip hidden">
+        <img id="userAvatarThumb" src="" alt="Avatar" class="avatar-thumb">
+        <span id="userNicknameDisplay">User</span>
+        <span id="userBadgeSymbol" class="verified-badge hidden">★</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Основной макет платформы -->
+  <main class="main-container">
+    
+    <!-- Левый сайдбар: Официальный канал и Бот -->
+    <aside class="sidebar left-sidebar">
+      
+      <!-- Официальный канал разработчиков -->
+      <div class="cyber-card official-channel">
+        <div class="card-header">
+          <span class="symbol">★</span>
+          <h3>ОФИЦИАЛЬНЫЙ КАНАЛ СОЗДАТЕЛЕЙ</h3>
+        </div>
+        <div class="channel-info">
+          <h4 class="channel-title">Aether Studio</h4>
+          <p class="channel-desc">Экосистема кодов, баз данных и защищенного софта.</p>
+          <div class="subscribers-row">
+            <span>Подписчики: <strong id="officialSubCount">0</strong></span>
+            <button id="subscribeOfficialBtn" class="cyber-btn small">
+              <span class="sym">▲</span> Подписаться
+            </button>
+          </div>
+          <div class="owner-tag-badge">Владелец: a.32332354@gmail.com</div>
+        </div>
+      </div>
+
+      <!-- Aether Bot (Строго 10 фиксированных вопросов) -->
+      <div class="cyber-card bot-section">
+        <div class="card-header">
+          <span class="symbol">⚙</span>
+          <h3>Aether Bot (Защищенный FAQ)</h3>
+        </div>
+        <p class="bot-hint">Выберите один из 10 разрешенных вопросов:</p>
+        
+        <div id="faqButtonsContainer" class="faq-buttons-list">
+          <!-- Генерируется динамически скриптом -->
+        </div>
+
+        <div id="botAnswerCard" class="bot-answer-card hidden">
+          <div class="answer-title">▲ Ответ Aether Bot:</div>
+          <p id="botAnswerText"></p>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- Центральная лента: Контент, посты и конструктор -->
+    <section class="content-feed">
+      
+      <!-- Панель управления лентой -->
+      <div class="feed-top-bar cyber-card">
+        <div class="action-buttons-group">
+          <button id="openPostModalBtn" class="cyber-btn primary">
+            <span class="sym">＋</span> Создать пост / проект
+          </button>
+          <button id="openConstructorBtn" class="cyber-btn secondary">
+            <span class="sym">⚙</span> Конструктор (HTML/JS/CSS/JSON)
+          </button>
+        </div>
+
+        <div class="search-filter-box">
+          <input type="text" id="searchInput" class="cyber-input" placeholder="Поиск по тегам, коду, языкам и популярности...">
+          <select id="tagFilterSelect" class="cyber-select">
+            <option value="all">Все теги</option>
+            <option value="html">#html</option>
+            <option value="javascript">#javascript</option>
+            <option value="css">#css</option>
+            <option value="json">#json</option>
+            <option value="python">#python</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Лента публикаций и шаблонов -->
+      <div id="postsContainer" class="posts-grid-container">
+        <!-- Посты пользователей и шаблоны из базы данных -->
+      </div>
+
+      <!-- Встроенный конструктор кода и библиотека шаблонов (50+ примеров) -->
+      <div id="constructorSection" class="cyber-card constructor-panel hidden">
+        <div class="constructor-header">
+          <h2>▲ Aether Code Constructor & DB Studio</h2>
+          <div class="constructor-actions">
+            <button id="runCodePreviewBtn" class="cyber-btn small">▲ Запустить предпросмотр (Ctrl+Enter)</button>
+            <button id="exportProjectBtn" class="cyber-btn small secondary">■ Экспорт (ZIP/JSON)</button>
+            <button id="importProjectBtn" class="cyber-btn small secondary">■ Импорт проекта</button>
+            <input type="file" id="importFileInput" hidden accept=".json,.zip">
+          </div>
+        </div>
+
+        <!-- Редакторы вкладок -->
+        <div class="constructor-tabs">
+          <button class="tab-btn active" data-tab="html">HTML</button>
+          <button class="tab-btn" data-tab="css">CSS</button>
+          <button class="tab-btn" data-tab="js">JavaScript</button>
+          <button class="tab-btn" data-tab="json">JSON / DB</button>
+          <button class="tab-btn" data-tab="templates">Библиотека (>50 шаблонов)</button>
+        </div>
+
+        <div class="constructor-editor-body">
+          <textarea id="codeEditorArea" class="cyber-textarea code-area" placeholder="// Пишите код или выберите готовый шаблон из базы..."></textarea>
+          <div id="previewContainer" class="preview-box hidden">
+            <iframe id="previewFrame" title="Live Preview"></iframe>
+          </div>
+          <div id="templatesContainer" class="templates-grid hidden">
+            <!-- 50+ готовых блоков и плашек для копирования -->
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Правый сайдбар: Топ авторов и Админ-панель -->
+    <aside class="sidebar right-sidebar">
+      
+      <!-- Топ авторов и галочки -->
+      <div class="cyber-card top-authors-card">
+        <div class="card-header">
+          <span class="symbol">★</span>
+          <h3>ТОП АВТОРОВ</h3>
+        </div>
+        <div id="topAuthorsList" class="authors-list">
+          <!-- Динамический список с галочками Популярный пользователь -->
+        </div>
+      </div>
+
+      <!-- Секретная Админ-панель (Доступна только владельцу a.32332354@gmail.com) -->
+      <div id="adminPanelCard" class="cyber-card admin-panel-card hidden">
+        <div class="card-header admin-header">
+          <span class="symbol">⚙</span>
+          <h3>АДМИН-ПАНЕЛЬ ВЛАДЕЛЬЦА</h3>
+        </div>
+        <p class="admin-user-tag">Вы вошли как: a.32332354@gmail.com</p>
+        
+        <div class="admin-controls-list">
+          <div class="admin-group">
+            <label>Управление галочками (Популярный пользователь):</label>
+            <input type="text" id="adminTargetUserEmail" class="cyber-input" placeholder="Email пользователя...">
+            <button id="adminToggleBadgeBtn" class="cyber-btn small">Выдать / Снять галочку</button>
+          </div>
+
+          <div class="admin-group">
+            <label>Экстренный вход без пароля (Защита от взлома):</label>
+            <input type="text" id="adminBypassEmail" class="cyber-input" placeholder="Email пострадавшего...">
+            <button id="adminBypassLoginBtn" class="cyber-btn small danger">Войти под аккаунтом</button>
+          </div>
+
+          <div class="admin-group">
+            <label>Сброс / Смена пароля:</label>
+            <input type="text" id="adminResetEmail" class="cyber-input" placeholder="Email...">
+            <input type="password" id="adminNewPassword" class="cyber-input" placeholder="Новый пароль...">
+            <button id="adminChangePasswordBtn" class="cyber-btn small">Сменить пароль</button>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- Модальное окно авторизации и гостевого таймера -->
+  <div id="authModal" class="modal hidden">
+    <div class="modal-content cyber-card">
+      <span class="close-modal" id="closeAuthModal">✕</span>
+      <h2>▲ Авторизация в Aether Network</h2>
+      <p class="modal-sub">Войдите через аккаунт Google, используйте обычный вход или гостевой режим (доступно 20 минут).</p>
+      
+      <div class="form-group">
+        <input type="text" id="authNicknameInput" class="cyber-input" placeholder="Ваш никнейм (макс. 20 символов)" maxlength="20">
+      </div>
+      <div class="form-group">
+        <input type="email" id="authEmailInput" class="cyber-input" placeholder="Email (например: a.32332354@gmail.com)">
+      </div>
+      <div class="form-group">
+        <input type="password" id="authPasswordInput" class="cyber-input" placeholder="Пароль доступа...">
+      </div>
+
+      <div class="modal-actions-row">
+        <button id="submitGoogleAuthBtn" class="cyber-btn">■ Войти через Google</button>
+        <button id="submitNormalAuthBtn" class="cyber-btn primary">▲ Войти в аккаунт</button>
+        <button id="submitGuestAuthBtn" class="cyber-btn secondary">● Режим гостя (20 мин)</button>
+      </div>
+
+      <div id="guestTimerAlert" class="guest-timer-box hidden">
+        <span>Внимание: гостевой режим истекает через: <strong id="timerCountdown">20:00</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модальное окно создания поста (с поддержкой DROP файлов) -->
+  <div id="postModal" class="modal hidden">
+    <div class="modal-content cyber-card wide-modal">
+      <span class="close-modal" id="closePostModal">✕</span>
+      <h2>▲ Создать публикацию, код или проект</h2>
+      
+      <div class="form-group">
+        <input type="text" id="postTitleInput" class="cyber-input" placeholder="Заголовок поста или проекта...">
+      </div>
+      
+      <div class="form-group">
+        <textarea id="postContentInput" class="cyber-textarea" placeholder="Текст поста, код или описание базы данных (до 1000 символов)..." maxlength="1000"></textarea>
+      </div>
+
+      <!-- Зона Drag & Drop для файлов (до 500 МБ, фото до 10, видео до 1 часа) -->
+      <div id="dropZoneContainer" class="drop-zone-box">
+        <span class="drop-symbol">■</span>
+        <p class="drop-text">DROP: Перетащите файлы сюда или нажмите для выбора</p>
+        <p class="drop-limits">Лимиты: до 500 МБ • Фото до 10 шт • Видео до 1 часа</p>
+        <input type="file" id="hiddenFileInput" multiple hidden>
+      </div>
+
+      <div id="selectedFilesPreview" class="files-preview-list"></div>
+
+      <button id="submitNewPostBtn" class="cyber-btn primary full-width">Опубликовать в Aether Network</button>
+    </div>
+  </div>
+
+  <!-- Футер сайта -->
+  <footer class="cyber-footer">
+    <div class="footer-content">
+      <p>© 2026 Aether Network. Все права защищены.</p>
+      <div class="footer-links">
+        <a href="#terms">Условия пользования каналом и ботом</a>
+        <a href="#about">О проекте</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>

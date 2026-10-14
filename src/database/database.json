@@ -1,0 +1,35 @@
+{
+  "officialChannel": {
+    "name": "Aether Studio",
+    "tag": "OFFICIAL_CREATORS_CHANNEL",
+    "ownerEmail": "a.32332354@gmail.com",
+    "subscribersCount": 0,
+    "verified": true,
+    "note": "Честный счетчик без накрутки"
+  },
+  "users": [
+    {
+      "id": "admin_01",
+      "email": "a.32332354@gmail.com",
+      "nickname": "AetherOwner",
+      "avatar": "/assets/default-admin.png",
+      "role": "SuperOwner",
+      "subscribers": 0,
+      "verifiedBadge": true,
+      "createdAt": "2026-01-01"
+    }
+  ],
+  "posts": [],
+  "faqQuestions": [
+    "Как зарегистрироваться через Google или как гость?",
+    "Как получить галочку Популярный пользователь?",
+    "Какие лимиты на загрузку файлов и видео?",
+    "Как работает конструктор кода HTML/JS/CSS/JSON?",
+    "Как защищены мои файлы и исходный код?",
+    "Как работают отзывы и предложение идей к постам?",
+    "Как связаться с официальным каналом создателей?",
+    "Что делать, если истекло 20 минут гостевого режима?",
+    "Как работает система жалоб и модерация бота?",
+    "Как экспортировать или импортировать проект в ZIP/JSON?"
+  ]
+}

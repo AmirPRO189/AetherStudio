@@ -1,0 +1,21 @@
+{
+  "adminAccount": {
+    "email": "a.32332354@gmail.com",
+    "role": "SuperOwner",
+    "verified": true,
+    "permissions": [
+      "manage_badges",
+      "bypass_auth",
+      "reset_passwords",
+      "moderate_content",
+      "manage_bot"
+    ]
+  },
+  "security": {
+    "sessionTimeoutMinutes": 20,
+    "maxFileSizeMb": 500,
+    "maxVideoDurationHours": 1,
+    "maxCharsPerPost": 1000,
+    "maxPhotosPerPost": 10
+  }
+}
