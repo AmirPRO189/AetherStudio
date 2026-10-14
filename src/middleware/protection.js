@@ -32,24 +32,24 @@ function antiFraudProtection(req, res, next) {
   next();
 }
 
-// Проверка лимитов на загрузку (файлы до 500 МБ, видео до 1 часа)
+// Проверка лимитов на загрузку (файлы до 10 МБ, видео до 10 минут для безопасности сервера)
 function validateUploadLimits(req, res, next) {
   const { fileSizeMb, videoDurationHours, textLength, photosCount } = req.body;
 
-  if (fileSizeMb && fileSizeMb > 500) {
-    return res.status(400).json({ error: "Превышен лимит файла. Максимальный размер — 500 МБ." });
+  if (fileSizeMb && fileSizeMb > 10) {
+    return res.status(400).json({ error: "Превышен лимит файла. Максимальный размер на бесплатном сервере — 10 МБ." });
   }
 
-  if (videoDurationHours && videoDurationHours > 1) {
-    return res.status(400).json({ error: "Превышен лимит видео. Максимальная длительность — 1 час." });
+  if (videoDurationHours && videoDurationHours > 0.16) { // ~10 минут
+    return res.status(400).json({ error: "Превышен лимит видео. Максимальная длительность — 10 минут." });
   }
 
   if (textLength && textLength > 1000) {
     return res.status(400).json({ error: "Превышен лимит текста. Максимум 1000 символов." });
   }
 
-  if (photosCount && photosCount > 10) {
-    return res.status(400).json({ error: "Превышен лимит фотографий. Максимум 10 штук." });
+  if (photosCount && photosCount > 5) {
+    return res.status(400).json({ error: "Превышен лимит фотографий. Максимум 5 штук." });
   }
 
   next();
